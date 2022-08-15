@@ -1,0 +1,59 @@
+{
+  "name": "pzpw-template",
+  "version": "1.0.0",
+  "description": "Main template used by PZPW when setting up a new project.",
+  "main": "",
+  "scripts": {
+    "clean": "del-cli --force ./dist ./workshop ./declaration",
+    "build-compiler": "tsc --project ./.compiler/",
+    "compile-distribution": "node ./.compiler/compiler.js distribution",
+    "compile-development": "node ./.compiler/compiler.js development",
+    "compile-declaration": "node ./.compiler/compiler.js declaration",
+    "compile-workshop": "node ./.compiler/compiler.js workshop",
+    "clean-distribution": "node ./.compiler/compiler.js clean-distribution",
+    "clean-workshop": "node ./.compiler/compiler.js clean-workshop"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Konijima/PipeWrenchTemplate.git"
+  },
+  "keywords": [
+    "Project Zomboid",
+    "asledgehammer",
+    "PipeWrench",
+    "Modding Framework"
+  ],
+  "author": "asledgehammer",
+  "contributors": [
+    "Konijima",
+    "Zed"
+  ],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Konijima/PipeWrenchTemplate/issues"
+  },
+  "homepage": "https://github.com/Konijima/PipeWrenchTemplate",
+  "dependencies": {
+    "PipeWrench": "github:asledgehammer/PipeWrench#stable",
+    "PipeWrench-Events": "github:asledgehammer/PipeWrench-Events",
+    "PipeWrench-Utils": "github:asledgehammer/PipeWrench-Utils"
+  },
+  "devDependencies": {
+    "ansi": "^0.3.1",
+    "chokidar": "^3.5.3",
+    "colors": "^1.4.0",
+    "del-cli": "^4.0.1",
+    "lua-types": "^2.11.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.2",
+    "typescript-to-lua": "^1.4.2"
+  },
+  "types": "./",
+  "typesVersions": {
+    ">=4.6": {
+      "*": [
+        "ts4.6/*"
+      ]
+    }
+  }
+}

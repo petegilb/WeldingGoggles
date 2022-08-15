@@ -1,0 +1,19 @@
+{
+    "mods": {
+        "WeldingGoggles": {
+            "name": "WeldingGoggles",
+            "description": "Add Welding Goggles to Zomboid!"
+        }
+    },
+    "workshop": {
+        "title": "WeldingGoggles",
+        "visibility": "public",
+        "mods": [
+            "WeldingGoggles"
+        ],
+        "tags": [
+            "Build 41"
+        ],
+        "author": "gilbz"
+    }
+}

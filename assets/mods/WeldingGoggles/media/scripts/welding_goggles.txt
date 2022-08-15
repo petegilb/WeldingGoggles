@@ -1,0 +1,17 @@
+module WeldingGoggles{
+    item WeldingGoggles
+	{
+	    DisplayCategory = Tool,
+		Type = Clothing,
+		DisplayName = Welder Goggles,
+		ClothingItem = Glasses_Aviators,
+		BodyLocation = Eyes,
+		Icon = GlassesAviator,
+		CanHaveHoles = false,
+        BiteDefense = 0,
+        ScratchDefense = 0,
+        Insulation = 0.0,
+		Tags = WeldingMask,
+        Weight = 0.1,
+	}
+}

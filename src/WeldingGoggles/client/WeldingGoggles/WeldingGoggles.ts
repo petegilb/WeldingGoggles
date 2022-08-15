@@ -20,7 +20,6 @@ function tintVision(playerNum:number){
     dark.setExterior(.5);
     dark.setInterior(.5);
     // Before adding this override the user could stop the effect by enabling/disabling search mode manually
-    print(blur, desat, gradient, dark);
     search_mode.setOverride(playerNum, true);
     search_mode.setEnabled(playerNum, true);
 }
@@ -54,7 +53,6 @@ onClothingUpdated.addListener(checkWeldingGoggles);
 
 // If the player entered search mode and is still wearing goggles, don't turn it off
 function disableSearchModeOverride(player: IsoPlayer, isSearchMode : boolean){
-    print('search mode should be disabled');
     checkWeldingGoggles(player);
 }
 

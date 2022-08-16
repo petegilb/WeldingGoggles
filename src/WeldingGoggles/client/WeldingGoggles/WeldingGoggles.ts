@@ -29,7 +29,9 @@ function tintVision(playerNum:number){
 function unTintVision(playerNum:number){
     let search_mode = getSearchMode();
     search_mode.setOverride(playerNum, false);
-    search_mode.setEnabled(playerNum, false);
+    if (search_mode.isEnabled(playerNum)){
+        search_mode.setEnabled(playerNum, false);
+    }
 }
 
 // Check if the client has goggles in their inventory and they are equipped
@@ -50,7 +52,7 @@ function checkWeldingGoggles(playerOrCharacter: IsoPlayer | IsoGameCharacter){
                 }
             }
         }
-        else if(tintMask == true && playerInventory.contains('Base.WeldingMask')){
+        if(tintMask == true && playerInventory.contains('Base.WeldingMask')){
             let mask = playerInventory.FindAll('Base.WeldingMask');
             for(let i=0; i<mask.size(); i++){
                 if (mask.get(i).isEquipped()){
@@ -60,7 +62,9 @@ function checkWeldingGoggles(playerOrCharacter: IsoPlayer | IsoGameCharacter){
                 }
             }
         }
-        unTintVision(playerOrCharacter.getPlayerNum());
+        if(tintMask == true || tintGoggles == true){
+            unTintVision(playerOrCharacter.getPlayerNum());
+        }
     }
 }
 

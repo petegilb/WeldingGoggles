@@ -5,7 +5,8 @@ option WeldingGoggles.GogglesTint
 	type = boolean,
 	default = false,
 	page = WeldingGoggles,
-},
+}
+
 option WeldingGoggles.MaskTint
 {
 	type = boolean,

@@ -1,7 +1,8 @@
-import { KahluaTable } from "PipeWrench"
-import { getGlobal } from "PipeWrench-Utils"
+import { KahluaTable } from "PipeWrench";
+import { getGlobal } from "PipeWrench-Utils";
 
-const ProceduralDistributions = getGlobal<KahluaTable>("ProceduralDistributions")
+
+let ProceduralDistributions = getGlobal<KahluaTable>("ProceduralDistributions");
 
 // Add it to the same parts of the distribution table as the WeldingMask
 table.insert(ProceduralDistributions.list.ArmyHangarOutfit.items, "WeldingGoggles.WeldingGoggles");

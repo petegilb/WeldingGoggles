@@ -1,1 +1,14 @@
 VERSION = 1,
+
+option WeldingGoggles.GogglesTint
+{
+	type = boolean,
+	default = false,
+	page = WeldingGoggles,
+},
+option WeldingGoggles.MaskTint
+{
+	type = boolean,
+	default = false,
+	page = WeldingGoggles,
+}

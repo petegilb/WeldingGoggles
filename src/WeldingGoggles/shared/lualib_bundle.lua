@@ -1649,6 +1649,9 @@ local function __TS__StringSubstring(self, start, ____end)
     if ____end ~= nil and ____end < 0 then
         ____end = 0
     end
+    if ____end == nil then
+        ____end = -1
+    end
     return string.sub(self, start, ____end)
 end
 

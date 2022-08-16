@@ -1,5 +1,7 @@
-import { getSearchMode, IsoPlayer, IsoGameCharacter, getPlayer } from "PipeWrench";
+import { getSearchMode, IsoPlayer, IsoGameCharacter, getPlayer, KahluaTable } from "PipeWrench";
 import { onClothingUpdated, onDisableSearchMode, onGameStart, onToggleSearchMode } from "PipeWrench-Events";
+import { getGlobal } from "PipeWrench-Utils";
+
 
 // If the player is wearing welding goggles tint their vision a bit
 // Looked at the Blind Trait mod to create this method
@@ -32,14 +34,27 @@ function unTintVision(playerNum:number){
 
 // Check if the client has goggles in their inventory and they are equipped
 function checkWeldingGoggles(playerOrCharacter: IsoPlayer | IsoGameCharacter){
+    const SandboxVars = getGlobal<KahluaTable>("SandboxVars");
+    const tintGoggles = SandboxVars.WeldingGoggles.GogglesTint;
+    const tintMask = SandboxVars.WeldingGoggles.MaskTint;
     if (playerOrCharacter.getIsNPC() == false){
         let playerInventory = playerOrCharacter.getInventory();
-        if(playerInventory.contains('WeldingGoggles.WeldingGoggles')){
+        if(tintGoggles == true && playerInventory.contains('WeldingGoggles.WeldingGoggles')){
             print('inventory contains welding goggles');
             let goggles = playerInventory.FindAll('WeldingGoggles.WeldingGoggles');
             for(let i=0; i<goggles.size(); i++){
                 if (goggles.get(i).isEquipped()){
-                    print('tinting vision!!');
+                    print('tinting vision!! -- goggles');
+                    tintVision(playerOrCharacter.getPlayerNum());
+                    return;
+                }
+            }
+        }
+        else if(tintMask == true && playerInventory.contains('Base.WeldingMask')){
+            let mask = playerInventory.FindAll('Base.WeldingMask');
+            for(let i=0; i<mask.size(); i++){
+                if (mask.get(i).isEquipped()){
+                    print('tinting vision!! -- mask');
                     tintVision(playerOrCharacter.getPlayerNum());
                     return;
                 }

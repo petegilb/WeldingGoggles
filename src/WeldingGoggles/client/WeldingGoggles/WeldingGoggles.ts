@@ -1,13 +1,11 @@
 import { getSearchMode, IsoPlayer, IsoGameCharacter, getPlayer, KahluaTable } from "PipeWrench";
-import { onClothingUpdated, onDisableSearchMode, onGameStart, onToggleSearchMode } from "PipeWrench-Events";
+import { onClothingUpdated, onDisableSearchMode, onGameStart } from "PipeWrench-Events";
 import { getGlobal } from "PipeWrench-Utils";
-
 
 // If the player is wearing welding goggles tint their vision a bit
 // Looked at the Blind Trait mod to create this method
 function tintVision(playerNum:number){
     let search_mode = getSearchMode();
-    
     let player_search_mode = search_mode.getSearchModeForPlayer(playerNum);
     let blur = player_search_mode.getBlur();
     blur.setExterior(.2);
@@ -39,7 +37,8 @@ function checkWeldingGoggles(playerOrCharacter: IsoPlayer | IsoGameCharacter){
     const SandboxVars = getGlobal<KahluaTable>("SandboxVars");
     const tintGoggles = SandboxVars.WeldingGoggles.GogglesTint;
     const tintMask = SandboxVars.WeldingGoggles.MaskTint;
-    if (playerOrCharacter.getIsNPC() == false){
+    // Check if the object is a player (hopefully bc checking the type itself wouldn't work)
+    if (playerOrCharacter.getIsNPC() == false && playerOrCharacter.getMoodles() != null){
         let playerInventory = playerOrCharacter.getInventory();
         if(tintGoggles == true && playerInventory.contains('WeldingGoggles.WeldingGoggles')){
             print('inventory contains welding goggles');
@@ -68,12 +67,12 @@ function checkWeldingGoggles(playerOrCharacter: IsoPlayer | IsoGameCharacter){
     }
 }
 
-onClothingUpdated.addListener(checkWeldingGoggles);
 
 // If the player entered search mode and is still wearing goggles, don't turn it off
 function disableSearchModeOverride(player: IsoPlayer, isSearchMode : boolean){
     checkWeldingGoggles(player);
 }
 
+onClothingUpdated.addListener(checkWeldingGoggles);
 onDisableSearchMode.addListener(disableSearchModeOverride);
 onGameStart.addListener(function(){checkWeldingGoggles(getPlayer())});

@@ -1,7 +1,5 @@
 # Welding Goggles
-A mod for Project Zomboid built using [pzpw](https://github.com/Konijima/pzpw)/pipewrench/typescript!
-
-<br>
+A mod for Project Zomboid built using [pzpw](https://github.com/Konijima/pzpw)/[PipeWrench](https://github.com/asledgehammer/PipeWrench)/typescript!
 
 ## Details
 - Adds Welding Goggles to the game with custom models and some custom logic!

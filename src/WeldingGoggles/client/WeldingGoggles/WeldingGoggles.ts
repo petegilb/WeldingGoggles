@@ -41,11 +41,9 @@ function checkWeldingGoggles(playerOrCharacter: IsoPlayer | IsoGameCharacter){
     if (playerOrCharacter.getIsNPC() == false && playerOrCharacter.getMoodles() != null){
         let playerInventory = playerOrCharacter.getInventory();
         if(tintGoggles == true && playerInventory.contains('WeldingGoggles.WeldingGoggles')){
-            print('inventory contains welding goggles');
             let goggles = playerInventory.FindAll('WeldingGoggles.WeldingGoggles');
             for(let i=0; i<goggles.size(); i++){
                 if (goggles.get(i).isEquipped()){
-                    print('tinting vision!! -- goggles');
                     tintVision(playerOrCharacter.getPlayerNum());
                     return;
                 }
@@ -55,7 +53,6 @@ function checkWeldingGoggles(playerOrCharacter: IsoPlayer | IsoGameCharacter){
             let mask = playerInventory.FindAll('Base.WeldingMask');
             for(let i=0; i<mask.size(); i++){
                 if (mask.get(i).isEquipped()){
-                    print('tinting vision!! -- mask');
                     tintVision(playerOrCharacter.getPlayerNum());
                     return;
                 }

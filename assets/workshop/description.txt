@@ -1,3 +1,3 @@
-My super mod
+Adds Welding Goggles to Project Zomboid!
 
-Is super cool
+Also adds the feature to tint the screen while wearing them or the welding mask! (Sandbox options defaulted to false)

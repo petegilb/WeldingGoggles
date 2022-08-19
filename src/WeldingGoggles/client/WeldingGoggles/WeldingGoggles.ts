@@ -1,4 +1,4 @@
-import { getSearchMode, IsoPlayer, IsoGameCharacter, getPlayer, KahluaTable } from "PipeWrench";
+import { getSearchMode, IsoPlayer, IsoGameCharacter, getPlayer, KahluaTable, _instanceof_ } from "PipeWrench";
 import { onClothingUpdated, onDisableSearchMode, onGameStart } from "PipeWrench-Events";
 import { getGlobal } from "PipeWrench-Utils";
 
@@ -26,7 +26,9 @@ function tintVision(playerNum:number){
 
 function unTintVision(playerNum:number){
     let search_mode = getSearchMode();
-    search_mode.setOverride(playerNum, false);
+    if (search_mode.isOverride(playerNum)){
+        search_mode.setOverride(playerNum, false);
+    }
     if (search_mode.isEnabled(playerNum)){
         search_mode.setEnabled(playerNum, false);
     }
@@ -34,17 +36,18 @@ function unTintVision(playerNum:number){
 
 // Check if the client has goggles in their inventory and they are equipped
 function checkWeldingGoggles(playerOrCharacter: IsoPlayer | IsoGameCharacter){
-    const SandboxVars = getGlobal<KahluaTable>("SandboxVars");
-    const tintGoggles = SandboxVars.WeldingGoggles.GogglesTint;
-    const tintMask = SandboxVars.WeldingGoggles.MaskTint;
     // Check if the object is a player (hopefully bc checking the type itself wouldn't work)
-    if (playerOrCharacter.getIsNPC() == false && playerOrCharacter.getMoodles() != null){
-        let playerInventory = playerOrCharacter.getInventory();
+    if (_instanceof_(playerOrCharacter, "IsoPlayer")){
+        let player = playerOrCharacter as IsoPlayer;
+        let playerInventory = player.getInventory();
+        const SandboxVars = getGlobal<KahluaTable>("SandboxVars");
+        const tintGoggles = SandboxVars.WeldingGoggles.GogglesTint;
+        const tintMask = SandboxVars.WeldingGoggles.MaskTint;
         if(tintGoggles == true && playerInventory.contains('WeldingGoggles.WeldingGoggles')){
             let goggles = playerInventory.FindAll('WeldingGoggles.WeldingGoggles');
             for(let i=0; i<goggles.size(); i++){
                 if (goggles.get(i).isEquipped()){
-                    tintVision(playerOrCharacter.getPlayerNum());
+                    tintVision(player.getPlayerNum());
                     return;
                 }
             }
@@ -53,23 +56,27 @@ function checkWeldingGoggles(playerOrCharacter: IsoPlayer | IsoGameCharacter){
             let mask = playerInventory.FindAll('Base.WeldingMask');
             for(let i=0; i<mask.size(); i++){
                 if (mask.get(i).isEquipped()){
-                    tintVision(playerOrCharacter.getPlayerNum());
+                    tintVision(player.getPlayerNum());
                     return;
                 }
             }
         }
-        if(tintMask == true || tintGoggles == true){
-            unTintVision(playerOrCharacter.getPlayerNum());
-        }
+        unTintVision(player.getPlayerNum());
     }
 }
-
 
 // If the player entered search mode and is still wearing goggles, don't turn it off
 function disableSearchModeOverride(player: IsoPlayer, isSearchMode : boolean){
     checkWeldingGoggles(player);
 }
 
-onClothingUpdated.addListener(checkWeldingGoggles);
-onDisableSearchMode.addListener(disableSearchModeOverride);
-onGameStart.addListener(function(){checkWeldingGoggles(getPlayer())});
+onGameStart.addListener(function(){
+    const SandboxVars = getGlobal<KahluaTable>("SandboxVars");
+    const tintGoggles = SandboxVars.WeldingGoggles.GogglesTint;
+    const tintMask = SandboxVars.WeldingGoggles.MaskTint;
+    if(tintGoggles || tintMask){
+        checkWeldingGoggles(getPlayer())
+        onDisableSearchMode.addListener(disableSearchModeOverride);
+        onClothingUpdated.addListener(checkWeldingGoggles);
+    }
+});

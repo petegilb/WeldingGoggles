@@ -1,4 +1,4 @@
-import { getSearchMode, IsoPlayer, IsoGameCharacter, getPlayer, KahluaTable, _instanceof_ } from "PipeWrench";
+import { getSearchMode, IsoPlayer, IsoGameCharacter, getPlayer, KahluaTable, _instanceof_, getScriptManager, Recipe } from "PipeWrench";
 import { onClothingUpdated, onDisableSearchMode, onGameStart } from "PipeWrench-Events";
 import { getGlobal } from "PipeWrench-Utils";
 
